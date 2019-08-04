@@ -8,7 +8,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="board.BoardVO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <%
     List<BoardVO> boardVOList = (List<BoardVO>) session.getAttribute("boardList");
 %>
@@ -46,18 +46,15 @@
                 <th bgcolor="orange" width="100">조회수</th>
             </tr>
 
-            <% for(BoardVO board : boardVOList) { %>
-            <tr>
-                <td><%= board.getSeq() %></td>
-                <td align="left">
-                    <a href="getBoard.do?seq=<%= board.getSeq() %>">
-                    <%= board.getTitle()%></a>
-                </td>
-                <td><%= board.getWriter()%></td>
-                <td><%= board.getRegDate()%></td>
-                <td><%= board.getCnt()%></td>
-            </tr>
-            <% } %>
+            <c:forEach items="${boardList}" var="board">
+                <tr>
+                    <td>${board.seq}</td>
+                    <td align="left"><a href="getBoard.do?seq=${board.seq}"></a>${board.title}</td>
+                    <td>${board.writer}</td>
+                    <td>${board.regDate}</td>
+                    <td>${board.cnt}</td>
+                </tr>
+            </c:forEach>
         </table>
         <br>
         <a href="insertBoard.jsp">새글 등록</a>
