@@ -2,37 +2,23 @@ package board.view.board;
 
 import board.BoardVO;
 import board.impl.BoardDAO;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.Controller;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.util.List;
 
 /**
  * Created by seansin@cbnu.ac.kr.com on 04/08/2019
  * Blog : http://dailyworker.github.io
  * Github : http://github.com/dailyworker
  */
-public class GetBoardListController implements Controller {
-    @Override
-    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("글 목록 검색 처리");
+@Controller
+public class GetBoardListController {
 
-        // 1. 사용자 입력 정보 추출(검색 기능은 나중에 구현)
-        // 2. DB 연동 처리
-        BoardVO boardVO = new BoardVO();
-        BoardDAO boardDAO = new BoardDAO();
-        List<BoardVO> boardList = boardDAO.getBoardList(boardVO);
+    @RequestMapping("/getBoardList.do")
+    public ModelAndView getBoardList(BoardVO vo, BoardDAO boardDAO, ModelAndView modelAndView){
 
-        // 3. 검색 결과를 세션에 저장하고 목록 화면을 리턴
-        HttpSession session = request.getSession();
-        session.setAttribute("boardList", boardList);
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("boardList", boardList);
-        modelAndView.setViewName("getBoardList");
+        modelAndView.addObject("boardList", boardDAO.getBoardList(vo));
+        modelAndView.setViewName("SpringMVC/getBoardList.jsp");
 
         return modelAndView;
     }
