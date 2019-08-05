@@ -1,16 +1,18 @@
-package board.view.controller.user;
+package board.view.user;
 
 import board.user.UserVO;
 import board.user.impl.UserDAO;
-import board.view.controller.Controller;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.Controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class LoginController implements Controller {
+
     // 확장자 없는 문자열 리턴 시 자동으로 .jsp 확장자가 붙음
     @Override
-    public String handleRequest(HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("로그인 처리");
 
         String id       = request.getParameter("id");
@@ -23,10 +25,12 @@ public class LoginController implements Controller {
         UserDAO userDAO = new UserDAO();
         UserVO user = userDAO.getUser(userVO);
 
+        ModelAndView modelAndView = new ModelAndView();
         if(user != null){
-            return "getBoardList.do";
+            modelAndView.setViewName("redirect:getBoardList.do");
         } else {
-            return "login";
+            modelAndView.setViewName("redirect:/SpringMVC/login.jsp");
         }
+        return modelAndView;
     }
 }

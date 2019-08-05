@@ -1,8 +1,9 @@
-package board.view.controller.board;
+package board.view.board;
 
 import board.BoardVO;
 import board.impl.BoardDAO;
-import board.view.controller.Controller;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.Controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +17,7 @@ import java.util.List;
  */
 public class GetBoardListController implements Controller {
     @Override
-    public String handleRequest(HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("글 목록 검색 처리");
 
         // 1. 사용자 입력 정보 추출(검색 기능은 나중에 구현)
@@ -28,6 +29,11 @@ public class GetBoardListController implements Controller {
         // 3. 검색 결과를 세션에 저장하고 목록 화면을 리턴
         HttpSession session = request.getSession();
         session.setAttribute("boardList", boardList);
-        return "getBoardList";
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("boardList", boardList);
+        modelAndView.setViewName("getBoardList");
+
+        return modelAndView;
     }
 }

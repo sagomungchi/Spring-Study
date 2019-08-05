@@ -1,12 +1,12 @@
-package board.view.controller.board;
+package board.view.board;
 
 import board.BoardVO;
 import board.impl.BoardDAO;
-import board.view.controller.Controller;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.Controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 /**
  * Created by seansin@cbnu.ac.kr.com on 04/08/2019
  * Blog : http://dailyworker.github.io
@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 public class UpdateBoardController implements Controller {
 
     @Override
-    public String handleRequest(HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("글 수정 처리");
 
         // 1. 사용자 입력 정보 추출
@@ -32,6 +32,10 @@ public class UpdateBoardController implements Controller {
         BoardDAO boardDAO = new BoardDAO();
         boardDAO.updateBoard(boardVO);
 
-        return "getBoardList.do";
+        // 3. 화면 네비게이션
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("redirect:getBoardList.do");
+
+        return modelAndView;
     }
 }
