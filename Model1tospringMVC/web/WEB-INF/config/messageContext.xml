@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 다국어 언어 설정 -->
+    <!-- MessageSource 등록 -->
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>/WEB-INF/message/messageSource</value>
+            </list>
+        </property>
+
+        <!-- 파일 기본 인코딩 지정 -->
+        <property name="defaultEncoding" value="UTF-8"/>
+    </bean>
+
+    <!-- LocaleResolver 등록 -->
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+        <property name="defaultLocale" value="ko"/>
+    </bean>
+</beans>
