@@ -17,6 +17,7 @@
             <a href="login.do">로그인</a>
             <a href="getBoardList.do">글 목록 바로가기</a>
             <hr>
+            <p>JIRA commit test용</p>
         </div>
     </body>
 </html>
