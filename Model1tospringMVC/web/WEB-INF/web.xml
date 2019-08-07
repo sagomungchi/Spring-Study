@@ -32,6 +32,15 @@
         <url-pattern>*.do</url-pattern>
     </servlet-mapping>
 
+    <!-- 2-Layered 아키텍처 설계를 위한 ContextLoaderListener 등록 -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:applicationContext.xml</param-value>
+    </context-param>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
     <display-name>Apache-Axis</display-name>
     <servlet>
         <display-name>Apache-Axis Servlet</display-name>

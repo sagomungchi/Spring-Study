@@ -2,6 +2,7 @@ package board.impl;
 
 import board.BoardVO;
 import board.common.JDBCUtil;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository("boardDAO")
 public class BoardDAO {
     private Connection conn = null;
     private PreparedStatement stmt = null;
@@ -116,7 +118,5 @@ public class BoardDAO {
         }
         return boardList;
     }
-
-
 
 }
