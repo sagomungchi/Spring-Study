@@ -11,6 +11,10 @@
 
     <context:component-scan base-package="board.view"/>
 
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="10000000"/>
+    </bean>
+
     <!--&lt;!&ndash; HandlerMapping 등록 &ndash;&gt;-->
     <!--<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">-->
         <!--<property name="mappings">-->

@@ -7,9 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,7 +23,7 @@ import java.util.Map;
 
 // 컨트롤러 통합
 @Controller
-@SessionAttributes(value = "board", types = {BoardVO.class})
+@SessionAttributes("board")
 public class BoardController {
 
     @Autowired
@@ -38,7 +40,14 @@ public class BoardController {
 
     //글 등록
     @RequestMapping("/insertBoard.do")
-    public String insertBoard(BoardVO vo){
+    public String insertBoard(BoardVO vo) throws IOException {
+        MultipartFile uploadFile = vo.getUploadFile();
+
+        if(!uploadFile.isEmpty()){
+            String fileName = uploadFile.getOriginalFilename();
+            uploadFile.transferTo(new File("/Users/sinsuung/Downloads/" + fileName));
+        }
+
         boardService.insertBoard(vo);
         return "getBoardList.do";
     }
@@ -60,6 +69,7 @@ public class BoardController {
         boardService.deleteBoard(vo);
         return "getBoardList.do";
     }
+
     //글 상세보기
     @RequestMapping("/getBoard.do")
     public String getBoard(BoardVO vo, Model model){
@@ -67,15 +77,13 @@ public class BoardController {
         model.addAttribute("board", boardService.getBoard(vo));
         return "SpringMVC/getBoard.jsp";
     }
-    //글 목록보기
-    @RequestMapping("/getBoardList.do")
-    public String getBoardList(
-            @RequestParam(value = "searchCondition", defaultValue = "TITLE", required = false) String condition,
-            @RequestParam(value = "searchKeyword",   defaultValue = "", required = false) String keyword,
-            BoardVO vo, Model model){
 
-        System.out.println("검색 조건 : "   + condition);
-        System.out.println("검색 키워드 : " + keyword);
+    //글 목록보기 + 글 목록 검색
+    @RequestMapping("/getBoardList.do")
+    public String getBoardList(BoardVO vo, Model model){
+        // Null Check
+        if(vo.getSearchCondition() == null) vo.setSearchCondition("TITLE");
+        if(vo.getSearchKeyword() == null) vo.setSearchKeyword("");
 
         model.addAttribute("boardList", boardService.getBoardList(vo));
         return "SpringMVC/getBoardList.jsp";

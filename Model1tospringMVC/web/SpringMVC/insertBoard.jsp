@@ -13,7 +13,7 @@
     <body>
         <div style="text-align: center;">
             <hr>
-            <form action="../insertBoard.do" method="post">
+            <form action="../insertBoard.do" method="post" enctype="multipart/form-data">
                 <table border="1" cellpadding="0" cellspacing="0">
                     <tr>
                         <td bgcolor="orange" width="70">제목</td>
@@ -34,6 +34,10 @@
                         </td>
                     </tr>
                     <tr>
+                        <td bgcolor="orange" width="70">업로드</td>
+                        <td align="left"><input type="file" name="uploadFile"></td>
+                    </tr>
+                    <tr>
                         <td colspan="2" align="center">
                             <input type="submit" value="새글 등록"/>
                         </td>
@@ -41,7 +45,7 @@
                 </table>
             </form>
             <hr>
-            <a href="getBoardList.do">글 목록으로</a>
+            <a href="../getBoardList.do">글 목록으로</a>
         </div>
     </body>
 </html>
