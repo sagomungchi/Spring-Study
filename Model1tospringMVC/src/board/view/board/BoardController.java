@@ -1,5 +1,6 @@
 package board.view.board;
 
+import board.BoardListVO;
 import board.BoardService;
 import board.BoardVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,12 +32,25 @@ public class BoardController {
     @Autowired
     private BoardService boardService;
 
-    @RequestMapping("/dataTransform.do")
+    @RequestMapping("/dataToJSON.do")
     @ResponseBody
-    public List<BoardVO> dataTransform(BoardVO vo){
+    public List<BoardVO> dataToJSON(BoardVO vo){
         vo.setSearchCondition("TITLE");
         vo.setSearchKeyword("");
         return boardService.getBoardList(vo);
+    }
+
+    @RequestMapping("/dataToXML.do")
+    @ResponseBody
+    public BoardListVO dataToXML(BoardVO vo){
+        vo.setSearchCondition("TITLE");
+        vo.setSearchKeyword("");
+
+        List<BoardVO> boardList = boardService.getBoardList(vo);
+        BoardListVO boardListVO = new BoardListVO();
+        boardListVO.setBoardList(boardList);
+
+        return boardListVO;
     }
 
     //검색 조건 목록 설정
